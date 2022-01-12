@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="content mt-3">
+  <div class="container-fluid">
+    <form action='{% url "url_search" %}' method="POST">
+      {% csrf_token %}
+      <div class="input-group" style="width: 50%;margin: auto;">
+        <input type="search" class="form-control rounded" name='website_url'
+          placeholder="Enter Website Name To Get Links/URLs Present On The Website" aria-label="Search"
+          aria-describedby="search-addon" />
+        <button type="submit" class="btn btn-outline-primary" style="margin-left: 5px;">search</button>
+      </div>
+    </form>
+    {% if url_list %}
+    <table class="table mt-3">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Url Name</th>
+          <th scope="col">Count:{{length}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for url in url_list %}
+        <tr>
+          <th scope="row">{{url}}</th>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

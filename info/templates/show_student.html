@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="content">
+  <div class="container-fluid" >
+    <div class="form-group">
+      {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == 'error' %}
+        <div class="alert alert-danger" style="margin-top: 10px;">{{message}}</div>
+        {% endif %}
+        {% if message.tags == 'success' %}
+        <div class="alert alert-success" style="margin-top: 10px;">{{message}}</div>
+        {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+    <table class="table" id='student_table'>
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Roll No</th>
+          <th scope="col">Name</th>
+          <th scope="col">Class</th>
+          <th scope="col">School</th>
+          <th scope="col">Mobile</th>
+          <th scope="col">Address</th>
+          {% if request.user.is_authenticated %}
+          <th scope="col">Action</th>
+          {% endif %}
+          <th><input type="text" class="form-control" id="studentname" style="height: 24px;" placeholder="Search Student" onkeyup="studentsearch()"></th>
+        
+        </tr>
+      </thead>
+
+      <tbody class="tablebody">
+        {% for student in student_list %}
+          <tr>
+            <th scope="row">{{student.roll_no}}</th>
+            <td class="name"><a href="academics_details/{{student.roll_no}}">{{student.name}}</a></td>
+            <td>{{student.class_name}}</td>
+            <td>{{student.school}}</td>
+            <td>{{student.mobile}}</td>
+            <td>{{student.address}}</td>
+            {% if request.user.is_authenticated %}
+            <td><a href="update_student/{{student.roll_no}}" class="btn btn-info">Update</a> | <a href="delete_student/{{student.roll_no}}" class="btn btn-danger">Delete</a></td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+<script>
+  function studentsearch(){
+    let filter=document.getElementById('studentname').value.toUpperCase();
+    let table=document.getElementById('student_table');
+    let tr=table.getElementsByTagName('tr');
+    
+    for(var i=1; i<tr.length; i++){
+      let td= tr[i].getElementsByClassName('name')[0];
+      if(td){
+        let textvalue=td.textContent || td.innerHTML;
+
+        if (textvalue.toUpperCase().indexOf(filter) > -1){
+          tr[i].style.display="";
+        }else{
+          tr[i].style.display="None";
+        }
+      }
+    }
+
+  }
+</script>
+{% endblock  %}

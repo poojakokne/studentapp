@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="content mt-3">
+  <div class="container-fluid">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Roll No</th>
+          <th scope="col">Maths Mark</th>
+          <th scope="col">Physics Mark</th>
+          <th scope="col">Chemistry Mark</th>
+          <th scope="col">Biology Mark</th>
+          <th scope="col">English Mark</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">{{student_academics.roll_no.roll_no}}</th>
+          <td>{{student_academics.maths}}</td>
+          <td>{{student_academics.physics}}</td>
+          <td>{{student_academics.chemistry}}</td>
+          <td>{{student_academics.biology}}</td>
+          <td>{{student_academics.english}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock  %}
